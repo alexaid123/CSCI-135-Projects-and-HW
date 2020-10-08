@@ -37,7 +37,7 @@ int main()
 		std::cin >> guess;
 		while(guess < low || guess > high)
 		{
-			std::cout << "Guess was out of the range [" << low << ", " << high << "]. Please re-enter\n";
+			std::cout << "Guess was out of the range [" << low << ", " << high << "]. Please re-enter: ";
 			std::cin >> guess;
 		}
 		 if(guess < randnum)
