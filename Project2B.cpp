@@ -16,41 +16,56 @@ int main()
 {
 	int low;
 	int high;
-	int number;
 	int feedback;
 	int guess;
-	std::cout << "Enter the lower limit of the range: ";
+	int tries = 0;
+	std::cout << "Enter left end in range: ";
 	std::cin >> low;
-	std::cout << "Enter the upper limit of the range: ";
+	std::cout << "Enter right end in range: ";
 	std::cin >> high;
 	while(high <= low)
 	{
 		std::cout << "Invalid range, please enter a valid range!\n";
-		std::cout << "Enter the lower limit of the range: ";
+		std::cout << "Enter left end in range: ";
 		std::cin >> low;
-		std::cout << "Enter the upper limit of the range: ";
+		std::cout << "Enter right end in range: ";
 		std::cin >> high;
 	}
-	std::cout << "Enter an integer in this range: ";
-	std::cin >> number;
+	std::cout << "User has an int in [" << low << ", " << high << "]. Computer will guess.\n\n";
 	do
 	{
-		std::cout << "Enter feedback as a number (1 if my guess is too big, 2 if my guess is too small and 3 if my guess is just right)\n";
-		guess = ((high - low)/2) + low;
-		std::cout << "My guess is " << guess << "\n";
+		tries = tries + 1;
+		guess = (high + low)/2;
+		std::cout << "guess #" << tries << ": " << guess << ". How is my guess?\n";
+		std::cout << "1. too big 2. too small 3. just right\n";
+		std::cout << "Enter only 1, 2 or 3: ";
 		std::cin >> feedback;
+		while(feedback < 1 || feedback > 3)
+		{
+			std::cout << "Please enter only 1,2 or 3: ";
+			std::cin >> feedback;
+		}
 		if(feedback == 1)
 		{
-			high = guess;
-			std::cout << "Too high\n";
+			high = guess - 1;
+			std::cout << "\n";
 		}
 		else if(feedback == 2)
 		{
-			low = guess;
-			std::cout << "Too low\n";
+			low = guess + 1;
+			std::cout << "\n";
+		}
+		else if(feedback == 3)
+		{
+			std::cout << "My guess is correct!" << ".\n";
+		}
+		if(high == low)
+		{
+			guess = (high + low)/2;
+			std::cout << "The answer must be " << guess << ".\n";
+			break;
 		}
 	}
-	while(guess != number);
-	std::cout << "My guess is correct!\n";
+	while(feedback != 3);
 	return 0;
 }

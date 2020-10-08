@@ -17,34 +17,42 @@ int main()
 	int low;
 	int high;
 	int guess;
-	std::cout << "Enter the lower limit of the range: ";
+	int tries = 1;
+	std::cout << "Enter the left end of the range: ";
 	std::cin >> low;
-	std::cout << "Enter the upper limit of the range: ";
+	std::cout << "Enter the right end of the range: ";
 	std::cin >> high;
 	while(high <= low)
 	{
 		std::cout << "Invalid range, please enter a valid range!\n";
-		std::cout << "Enter the lower limit of the range: ";
+		std::cout << "Enter the left end of the range: ";
 	std::cin >> low;
-	std::cout << "Enter the upper limit of the range: ";
+	std::cout << "Enter the right end of the range: ";
 	std::cin >> high;
 	}
-    int randnum = low + ( std::rand() % ( high - low + 1 ) );
+	int randnum =  low + ( std::rand() % ( high - low + 1 ) );
+
 	do{
-		std::cout << "Enter your guess: ";
+		std::cout << "Guess #" << tries << " enter your guess: ";
 		std::cin >> guess;
-		if(guess < randnum)
+		while(guess < low || guess > high)
 		{
-			std::cout << "too small\n";
+			std::cout << "Guess was out of the range [" << low << ", " << high << "]. Please re-enter\n";
+			std::cin >> guess;
+		}
+		 if(guess < randnum)
+		{
+			std::cout << "guess is too small\n";
 		}
 		else if( guess > randnum)
 		{
-			std::cout << "too big\n";
+			std::cout << "guess is too big\n";
 		}
 		else
 		{
 			std::cout << "Congratulations you guessed the correct number!" << "\n";
 		}
+		tries = tries + 1;
 	}
 	while(guess != randnum);
 	return 0;

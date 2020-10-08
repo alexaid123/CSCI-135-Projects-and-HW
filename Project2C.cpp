@@ -14,43 +14,62 @@ When computer makes a correct guess, the game ends.
 
 int main()
 {
+	srand((unsigned) time(0));
 	int low;
 	int high;
-	int number;
 	int feedback;
 	int guess;
-	std::cout << "Enter the lower limit of the range: ";
+	int tries = 0;
+	std::cout << "Enter the left end in range: ";
 	std::cin >> low;
-	std::cout << "Enter the upper limit of the range: ";
+	std::cout << "Enter the right end in range: ";
 	std::cin >> high;
 	while(high <= low)
 	{
 		std::cout << "Invalid range, please enter a valid range!\n";
-		std::cout << "Enter the lower limit of the range: ";
+		std::cout << "Enter the left end in range: ";
 		std::cin >> low;
-		std::cout << "Enter the upper limit of the range: ";
+		std::cout << "Enter the right end in range: ";
 		std::cin >> high;
 	}
-	std::cout << "Enter an integer in this range: ";
-	std::cin >> number;
+	std::cout << "User has an int in [" << low << ", " << high << "]. Computer will guess.\n\n";
 	do
 	{
-		std::cout << "Enter feedback as a number (1 if my guess is too big, 2 if my guess is too small and 3 if my guess is just right)\n";
-		guess = low + ( std::rand() % ( high - low + 1 ) );
-		std::cout << "My guess is " << guess << "\n";
+		tries = tries + 1;
+		guess =  low + ( std::rand() % ( high - low + 1 ) );
+		std::cout << "Guess #" << tries << ": " << guess << ". How is my guess?\n";
+		std::cout << "1. too big 2. too small 3. just right \nEnter only 1,2 or 3: ";
 		std::cin >> feedback;
+		while(feedback < 1 || feedback > 3)
+		{
+			std::cout << "Please enter only 1,2 or 3: ";
+			std::cin >> feedback;
+		}
 		if(feedback == 1)
 		{
 			high = guess - 1;
-			std::cout << "Too high\n";
+			std::cout << "\n";
 		}
 		else if(feedback == 2)
 		{
 			low = guess + 1;
-			std::cout << "Too low\n";
+			std::cout << "\n";
+		}
+		else if(feedback == 3)
+		{
+			std::cout << "My guess is correct!" << ".\n";
+		}
+		else if(feedback == 3)
+		{
+			std::cout << "Congratulations! The answer is " << guess << "\n";
+		}
+		if(high == low)
+		{
+			guess = (high + low)/2;
+			std::cout << "The answer must be " << guess << ".\n";
+			break;
 		}
 	}
-	while(guess != number);
-	std::cout << "My guess is correct!\n";
+	while(feedback != 3);
 	return 0;
 }
